@@ -1,39 +1,35 @@
-#include<stdio.h>
-#include<string.h>
-#include<locale.h>
-#include <ctype.h>
+#include <stdio.h>
+#include <wchar.h>
+#include <wctype.h>
+#include <locale.h>
+
 int main() {
-    setlocale(LC_ALL, "");
-    char *palavra ; 
-    scanf("%99[^\n]", palavra);
+    setlocale(LC_ALL, ""); 
+
+    wchar_t palavra[100];//para tambem funcionar com caracteres especiais como acentos e cedilha usar wide char
     
-
-   while (strcmp(palavra,"FIM")!=0){
-    int tamanho = strlen(palavra); 
-    char *palindromo;
-
- 
-    for (int i = 0; i < tamanho; i++) {
-         if((palavra[i] >= 'a' && palavra[i] <= 'z')||(palavra[i] >= 'A' && palavra[i] <= 'Z')||(palavra[i] >= '0' && palavra[i] <= '9')){
-       palindromo[i] = palavra[tamanho - i - 1];
-  } else {
-       palavra[tamanho - i - 1] = 'l';
-       palindromo[i] = 'l';
+    while (1) {
+        fgetws(palavra, sizeof(palavra) / sizeof(wchar_t), stdin);
+        palavra[wcscspn(palavra, L"\n")] = L'\0'; 
+        
+        if (wcscmp(palavra, L"FIM") == 0) {
+            break; 
+        }
+        
+        wchar_t palindromo[100] = L""; 
+        int length = wcslen(palavra);
+        
+        for (int i = length - 1; i >= 0; i--) {
+            palindromo[length - 1 - i] = palavra[i]; 
+        }
+        
+        if (wcscmp(palavra, palindromo) == 0) {
+            wprintf(L"SIM\n");
+        } else {
+            wprintf(L"NAO\n");
+        }
     }
-    }
-
-    palindromo[tamanho] = '\0'; 
     
-    if(strcmp(palindromo,palavra)==0){
-        printf("SIM");
-    }
-    else{
-        printf("NAO");
-    }
- 
-    scanf("%99[^\n]", palavra);
-   
-   }
     return 0;
 }
 
