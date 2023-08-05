@@ -4,13 +4,13 @@
 #include <ctype.h>
 int main() {
     setlocale(LC_ALL, "");
-    char palavra [100]; 
+    char *palavra ; 
     scanf("%99[^\n]", palavra);
     
 
    while (strcmp(palavra,"FIM")!=0){
     int tamanho = strlen(palavra); 
-    char palindromo [100];
+    char *palindromo;
 
  
     for (int i = 0; i < tamanho; i++) {
@@ -25,10 +25,10 @@ int main() {
     palindromo[tamanho] = '\0'; 
     
     if(strcmp(palindromo,palavra)==0){
-        printf("SIM\n");
+        printf("SIM");
     }
     else{
-        printf("NAO\n");
+        printf("NAO");
     }
  
     scanf("%99[^\n]", palavra);
@@ -36,3 +36,5 @@ int main() {
    }
     return 0;
 }
+
+
