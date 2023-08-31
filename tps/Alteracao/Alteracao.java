@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.util.Random;
     class Alteracao{
@@ -17,6 +18,7 @@ import java.util.Random;
               palavra = sc.nextLine();
                 
             }
+            sc.close();
         }
         
         

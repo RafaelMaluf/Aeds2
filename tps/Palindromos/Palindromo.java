@@ -1,4 +1,5 @@
-//package tps.Palindromos;
+package tps.Palindromos;
+//package labs.palindromos;
 
 import java.util.Scanner;
     
