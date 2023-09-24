@@ -1,33 +1,33 @@
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 
 public class testeArq {
     public static void main(String[] args) throws IOException {
-        
-        int X = 0;
-        int Y = 0;
+        RandomAccessFile raf;
+        Integer X = 0;
+        Integer Y = 0;
         String W = "";
+        raf = new RandomAccessFile("testeula.ula", "r");
+        String input = raf.readLine();
         
-        String input = leitor();
         while(input != null) {
+            
+
             if(input.equals("inicio:")){
 
                 while (!input.equals("fim")) {
-                    input = leitor();
+                    input = raf.readLine();
                     char [] Cinput = input.toCharArray();
                     Cinput[Cinput.length-1] = '\0';
                     input = String.valueOf(Cinput);
-                    
+                    input =  input.replaceAll("\0", "");
                     if ((input.charAt(0)=='X')){   
 
                         
-                        String [] split = input.split("=");                                              
+                        String [] split = input.split("=");    
+                        System.out.println(input);
+                        System.out.println(split[1]);                                          
                         X = Integer.parseInt(split[1]);
                         
                     } else
@@ -40,7 +40,7 @@ public class testeArq {
                     } else {
                         
                         String [] split = input.split("=");
-                        split[1] = split[1].replaceAll("\0", "");
+                        
                        
                         if(split[1].length() == 2){
 
@@ -121,12 +121,16 @@ public class testeArq {
                         
                       decimal = binaryToDecimal(Integer.parseInt(W));
                       W = decimalToHex(X) + "" + decimalToHex(Y) + "" + decimalToHex(decimal);
-                      escritor(W);
+                      RandomAccessFile saida;
+                      saida = new RandomAccessFile("testeula.hex", "rw");
+                      saida.seek(saida.length());
+                      saida.writeChars(W+"\n");
+                      saida.close();
                         }
                 
                     }
                 }
-        
+        raf.close();
         System.out.println(input);
      }
      }
@@ -207,27 +211,5 @@ public class testeArq {
         // returning the final hex string
         return hexNumber;
     }
-
-    public static String leitor() throws IOException {
-        
-
-        FileInputStream stream = new FileInputStream("testeula.ula");
-        InputStreamReader reader = new InputStreamReader(stream);
-        BufferedReader br = new BufferedReader(reader);
-		BufferedReader buffRead = new BufferedReader(new FileReader("testeula.ula"));
-		String linha = br.readLine();
-        System.out.println(linha);
-        br.close();
-		buffRead.close();
-        return linha;
-	}
-
-	public static void escritor(String W) throws IOException {
-    
-		BufferedWriter buffWrite = new BufferedWriter(new FileWriter("testeula.hex"));
-        buffWrite.append(W + "\n");
-		buffWrite.close();
-        
-	}
  
 }
