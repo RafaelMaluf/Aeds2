@@ -28,7 +28,7 @@ public class Combinador {
          }
      }
      System.out.println(output);
-     
+     sc.close();
     
     }
         
