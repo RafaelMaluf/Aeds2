@@ -128,50 +128,70 @@ public class Jogadores {
 
         BufferedReader in = null;
 
-        String csv = "players.csv";
+        String csv = "/tmp/players.csv";
 
         in = new BufferedReader(new FileReader(csv));
 
         String input = in.readLine();
         int i = 0;
         while (i < 3923) {
-
+            
             input = in.readLine();
             if(input == null)
                 break;
             String[] split = input.split(",");
             
-                if (Integer.parseInt(split[0]) == id) {
-                    
-                    
+                    if(Integer.parseInt(split[0]) == id){
                     jogador.setId(Integer.parseInt(split[0]));
                     jogador.setNome(split[1]);
                     jogador.setAltura(Integer.parseInt(split[2]));
                     jogador.setPeso(Integer.parseInt(split[3]));
+                    
                     if(split[4].length() > 4){
+
                         jogador.setUniversidade(split[4]);
                         jogador.setAnoNascimento(Integer.parseInt(split[5]));
-                    } else {
-                        jogador.setUniversidade("nao informado");
-                        jogador.setAnoNascimento(Integer.parseInt(split[4]));
-                    }
-                    if(split.length > 6){
+
+                        if(split.length >= 8){
                         jogador.setCidadeNascimento(split[6]);
                         jogador.setEstadoNascimento(split[7]);
+
                     } else {
                         jogador.setCidadeNascimento("nao informado");
                         jogador.setEstadoNascimento("nao informado");
                     }
+
+                    } else {
+                        jogador.setUniversidade("nao informado");
+                        if(split[4].equals("")){
+                            jogador.setAnoNascimento(Integer.parseInt(split[5]));
+                        } else
+                        jogador.setAnoNascimento(Integer.parseInt(split[4]));
+
+                        if(split.length >= 7){
+                        jogador.setCidadeNascimento(split[5]);
+                        jogador.setEstadoNascimento(split[6]);
+
+                    } else {
+                        jogador.setCidadeNascimento("nao informado");
+                        jogador.setEstadoNascimento("nao informado");
+                    }
+                    }
+
+                    
                  
-                 jogador.imprimir();   
-                
+                jogador.imprimir();
             }
-            i++;
+                i++;
+            }
+            in.close();
+            
         } 
         
         
-            in.close();
-        }
+            
+    
+        
         
     
 
@@ -182,11 +202,11 @@ public class Jogadores {
         
         
         while (!input.equals("FIM")) {
-            
+            Jogadores jogador = new Jogadores();
             int id = Integer.parseInt(input);
             ler(id);
             input = sc.nextLine();
-
+            
         }
         
        
