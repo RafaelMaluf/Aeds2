@@ -122,7 +122,7 @@ public class Jogadores {
     }
 
     // metodo ler
-    public static void ler(int id) throws IOException {
+    public static Jogadores ler(int id) throws IOException {
 
         Jogadores jogador = new Jogadores();
 
@@ -130,7 +130,7 @@ public class Jogadores {
 
         String csv = "/tmp/players.csv";
 
-        in = new BufferedReader(new FileReader(csv));
+        in = new BufferedReader(new FileReader(csv)); // leitos do arquivo
 
         String input = in.readLine();
         int i = 0;
@@ -139,20 +139,21 @@ public class Jogadores {
             input = in.readLine();
             if(input == null)
                 break;
-            String[] split = input.split(",");
+            String[] split = input.split(","); // separa os dados em um array de strings
             
                     if(Integer.parseInt(split[0]) == id){
                     jogador.setId(Integer.parseInt(split[0]));
                     jogador.setNome(split[1]);
                     jogador.setAltura(Integer.parseInt(split[2]));
                     jogador.setPeso(Integer.parseInt(split[3]));
+                    // Id Nome Altura e Peso dos jogadores sempre presentes 
                     
-                    if(split[4].length() > 4){
+                    if(split[4].length() > 4){ // se o tamanho da string for maior que 4, significa que a universidade foi informada
 
                         jogador.setUniversidade(split[4]);
                         jogador.setAnoNascimento(Integer.parseInt(split[5]));
 
-                        if(split.length >= 8){
+                        if(split.length >= 8){ // se o tamanho do array for maior ou igual a 8, significa que a cidade e o estado foram informados
                         jogador.setCidadeNascimento(split[6]);
                         jogador.setEstadoNascimento(split[7]);
 
@@ -163,12 +164,12 @@ public class Jogadores {
 
                     } else {
                         jogador.setUniversidade("nao informado");
-                        if(split[4].equals("")){
+                        if(split[4].equals("")){ // se a universidade nao for informada a posicao 4 da string vai ser vazia, entao o ano de nascimento vai estar na posicao 5
                             jogador.setAnoNascimento(Integer.parseInt(split[5]));
                         } else
                         jogador.setAnoNascimento(Integer.parseInt(split[4]));
 
-                        if(split.length >= 7){
+                        if(split.length >= 7){ //se a universidade nao for informada mas o split for maior que 7 significa que a cidade e o estado foram informados
                         jogador.setCidadeNascimento(split[5]);
                         jogador.setEstadoNascimento(split[6]);
 
@@ -180,12 +181,12 @@ public class Jogadores {
 
                     
                  
-                jogador.imprimir();
+                
             }
                 i++;
             }
             in.close();
-            
+            return jogador;
         } 
         
         
@@ -204,9 +205,9 @@ public class Jogadores {
         while (!input.equals("FIM")) {
             Jogadores jogador = new Jogadores();
             int id = Integer.parseInt(input);
-            ler(id);
+            jogador = ler(id);
             input = sc.nextLine();
-            
+            jogador.imprimir();
         }
         
        
