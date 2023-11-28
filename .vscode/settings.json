@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "Combinador.C": "cpp"
+        "Combinador.C": "cpp",
+        "tp3q04": "c"
     }
 }
